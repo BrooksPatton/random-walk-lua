@@ -2,7 +2,7 @@ function love.load()
   screen_width, screen_height = love.graphics.getDimensions()
   prev = {screen_width / 2, screen_height / 2, 255, 255, 255, 10}
   points = {prev}
-  love.filesystem.setIdentity('screenshot_example');
+  love.filesystem.setIdentity('random-walk-screenshots');
 end
 
 function love.draw()
@@ -47,11 +47,18 @@ function calculateNewcoords(prev, direction)
     y = y + 1
   end
 
+  if x < 0 or x > screen_width then
+    x = math.random(0, screen_width)
+  end
+  if y < 0 or y > screen_height then
+    y = math.random(0, screen_height)
+  end
+
   return {x, y, 255, 255, 255, 10}
 end
 
 function love.keypressed(key, scancode, isrepeat)
-  if key == "printscreen" then
+  if key == "space" then
     print("printing!!!")
     local screenshot = love.graphics.newScreenshot();
     screenshot:encode('png', os.time() .. '.png');
